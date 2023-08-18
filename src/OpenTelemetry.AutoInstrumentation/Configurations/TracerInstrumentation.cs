@@ -129,4 +129,9 @@ internal enum TracerInstrumentation
     /// </summary>
     Azure = 18
 #endif
+
+    /// <summary>
+    /// Hangfire instrumentation.
+    /// </summary>
+    Hangfire = 18
 }

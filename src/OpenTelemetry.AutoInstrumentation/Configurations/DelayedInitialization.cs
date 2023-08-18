@@ -92,6 +92,12 @@ internal static class DelayedInitialization
         {
             lazyInstrumentationLoader.Add(new QuartzInitializer(pluginManager));
         }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static void AddHangfire(LazyInstrumentationLoader lazyInstrumentationLoader, PluginManager pluginManager)
+        {
+            lazyInstrumentationLoader.Add(new HangfireInitializer(pluginManager));
+        }
     }
 
     internal static class Metrics

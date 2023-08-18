@@ -286,6 +286,9 @@ internal static class Instrumentation
                 case TracerInstrumentation.Quartz:
                     DelayedInitialization.Traces.AddQuartz(lazyInstrumentationLoader, pluginManager);
                     break;
+                case TracerInstrumentation.Hangfire:
+                    DelayedInitialization.Traces.AddHangfire(lazyInstrumentationLoader, pluginManager);
+                    break;
 #if NET6_0_OR_GREATER
                 case TracerInstrumentation.AspNetCore:
                     DelayedInitialization.Traces.AddAspNetCore(lazyInstrumentationLoader, pluginManager);

@@ -46,6 +46,7 @@ internal static class EnvironmentConfigurationTracerHelper
                 TracerInstrumentation.Quartz => Wrappers.AddQuartzInstrumentation(builder, pluginManager, lazyInstrumentationLoader),
                 TracerInstrumentation.MongoDB => builder.AddSource("MongoDB.Driver.Core.Extensions.DiagnosticSources"),
                 TracerInstrumentation.MySqlConnector => builder.AddSource("MySqlConnector"),
+                TracerInstrumentation.Hangfire => Wrappers.AddHangfireInstrumentation(builder, pluginManager, lazyInstrumentationLoader),
 #if NET6_0_OR_GREATER
                 TracerInstrumentation.AspNetCore => Wrappers.AddAspNetCoreInstrumentation(builder, pluginManager, lazyInstrumentationLoader),
                 TracerInstrumentation.MassTransit => builder.AddSource("MassTransit"),
@@ -210,6 +211,14 @@ internal static class EnvironmentConfigurationTracerHelper
             return builder.AddSource("OpenTelemetry.Instrumentation.Quartz")
                 .AddLegacySource("Quartz.Job.Execute")
                 .AddLegacySource("Quartz.Job.Veto");
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static TracerProviderBuilder AddHangfireInstrumentation(TracerProviderBuilder builder, PluginManager pluginManager, LazyInstrumentationLoader lazyInstrumentationLoader)
+        {
+            DelayedInitialization.Traces.AddHangfire(lazyInstrumentationLoader, pluginManager);
+
+            return builder.AddSource("OpenTelemetry.Instrumentation.Hangfire");
         }
 
 #if NET6_0_OR_GREATER
